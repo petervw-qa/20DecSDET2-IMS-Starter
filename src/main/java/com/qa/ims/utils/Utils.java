@@ -20,10 +20,11 @@ public class Utils {
 	}
 
 	public Long getLong() {
-		String input = getString();
+		String input = null;
 		Long longInput = null;
 		do {
 			try {
+				input = getString();
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
@@ -37,10 +38,11 @@ public class Utils {
 	}
 
 	public Double getDouble() {
-		String input = getString();
+		String input = null;
 		Double doubleInput = null;
 		do {
 			try {
+				input = getString();
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
