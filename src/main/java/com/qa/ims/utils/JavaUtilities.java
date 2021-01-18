@@ -5,17 +5,17 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Utils {
+public class JavaUtilities {
 	private static Logger LOGGER = LogManager.getLogger();
 
 	private final Scanner scanner;
 
-	public Utils(Scanner scanner) {
+	public JavaUtilities(Scanner scanner) {
 		super();
 		this.scanner = scanner;
 	}
 
-	public Utils() {
+	public JavaUtilities() {
 		scanner = new Scanner(System.in);
 	}
 

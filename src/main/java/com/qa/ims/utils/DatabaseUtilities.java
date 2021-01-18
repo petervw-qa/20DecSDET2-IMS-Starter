@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DBUtils {
+public class DatabaseUtilities {
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
@@ -24,7 +24,7 @@ public class DBUtils {
 
 	private final String DB_PASS;
 
-	private DBUtils(String properties) {
+	private DatabaseUtilities(String properties) {
 		Properties dbProps = new Properties();
 		try (InputStream fis = new FileInputStream(properties)) {
 			dbProps.load(fis);
@@ -36,7 +36,7 @@ public class DBUtils {
 		this.DB_PASS = dbProps.getProperty("db.password", "");
 	}
 
-	public DBUtils() {
+	public DatabaseUtilities() {
 		this("src/main/resources/db.properties");
 	}
 
@@ -74,21 +74,21 @@ public class DBUtils {
 		return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 	}
 
-	public static DBUtils instance;
+	public static DatabaseUtilities instance;
 
-	public static DBUtils connect() {
-		instance = new DBUtils();
+	public static DatabaseUtilities connect() {
+		instance = new DatabaseUtilities();
 		return instance;
 	}
 
-	public static DBUtils connect(String properties) {
-		instance = new DBUtils(properties);
+	public static DatabaseUtilities connect(String properties) {
+		instance = new DatabaseUtilities(properties);
 		return instance;
 	}
 
-	public static DBUtils getInstance() {
+	public static DatabaseUtilities getInstance() {
 		if (instance == null) {
-			instance = new DBUtils();
+			instance = new DatabaseUtilities();
 		}
 		return instance;
 	}

@@ -1,11 +1,11 @@
-package com.qa.ims.persistence.domain;
+package com.qa.ims.cli;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.utils.Utils;
+import com.qa.ims.utils.JavaUtilities;
 
-public enum Domain {
+public enum DomainMenu {
 
 	CUSTOMER("Information about customers"), ITEM("Individual Items"), ORDER("Purchases of items"),
 	STOP("To close the application");
@@ -14,7 +14,7 @@ public enum Domain {
 
 	private String description;
 
-	private Domain(String description) {
+	private DomainMenu(String description) {
 		this.description = description;
 	}
 
@@ -23,22 +23,22 @@ public enum Domain {
 	}
 
 	public static void printDomains() {
-		for (Domain domain : Domain.values()) {
-			LOGGER.info(domain.getDescription());
+		for (DomainMenu domainMenu : DomainMenu.values()) {
+			LOGGER.info(domainMenu.getDescription());
 		}
 	}
 
-	public static Domain getDomain(Utils utils) {
-		Domain domain;
+	public static DomainMenu getDomain(JavaUtilities javaUtilities) {
+		DomainMenu domainMenu;
 		while (true) {
 			try {
-				domain = Domain.valueOf(utils.getString().toUpperCase());
+				domainMenu = DomainMenu.valueOf(javaUtilities.getString().toUpperCase());
 				break;
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");
 			}
 		}
-		return domain;
+		return domainMenu;
 	}
 
 }

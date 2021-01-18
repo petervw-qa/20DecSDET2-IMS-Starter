@@ -11,9 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Customer;
-import com.qa.ims.utils.DBUtils;
+import com.qa.ims.utils.DatabaseUtilities;
 
-public class CustomerDAO implements Dao<Customer> {
+public class CustomerDao implements IDomainDao<Customer> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
@@ -32,7 +32,7 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public List<Customer> readAll() {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("select * from customers");) {
 			List<Customer> customers = new ArrayList<>();
@@ -48,7 +48,7 @@ public class CustomerDAO implements Dao<Customer> {
 	}
 
 	public Customer readLatest() {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
@@ -67,7 +67,7 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public Customer create(Customer customer) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("INSERT INTO customers(first_name, surname) values('" + customer.getFirstName()
 					+ "','" + customer.getSurname() + "')");
@@ -80,7 +80,7 @@ public class CustomerDAO implements Dao<Customer> {
 	}
 
 	public Customer readCustomer(Long id) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
 			resultSet.next();
@@ -101,7 +101,7 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public Customer update(Customer customer) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("update customers set first_name ='" + customer.getFirstName() + "', surname ='"
 					+ customer.getSurname() + "' where id =" + customer.getId());
@@ -120,7 +120,7 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public int delete(long id) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from customers where id = " + id);
 		} catch (Exception e) {

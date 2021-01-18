@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface Dao<T> {
+public interface IDomainDao<T> {
 
 	List<T> readAll();
 
