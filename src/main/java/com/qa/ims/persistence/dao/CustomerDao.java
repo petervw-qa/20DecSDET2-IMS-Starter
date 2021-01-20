@@ -25,7 +25,7 @@ public class CustomerDao implements IDomainDao<Customer> {
                         .prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
-            statement.executeUpdate("");
+            statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
             LOGGER.debug(e);
