@@ -26,7 +26,7 @@ public class CustomerController implements ICrudController<Customer> {
     public List<Customer> readAll() {
         List<Customer> customers = customerDao.readAll();
         for (Customer customer : customers) {
-            LOGGER.info(customer.toString());
+            LOGGER.info(customer);
         }
         return customers;
     }

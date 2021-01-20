@@ -17,25 +17,27 @@ public class DatabaseUtilities {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private final String DB_URL;
+    private final String dbUrl;
 
-    private final String DB_USER;
+    private final String dbUser;
 
-    private final String DB_PASS;
+    private final String dbPassword;
 
     private DatabaseUtilities(String properties) {
         Properties dbProps = new Properties();
+        // try (InputStream fis = new FileInputStream(properties)) {
         try (InputStream fis = ClassLoader.getSystemResourceAsStream(properties)) {
             dbProps.load(fis);
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        this.DB_URL = dbProps.getProperty("db.url", "");
-        this.DB_USER = dbProps.getProperty("db.user", "");
-        this.DB_PASS = dbProps.getProperty("db.password", "");
+        this.dbUrl = dbProps.getProperty("db.url", "");
+        this.dbUser = dbProps.getProperty("db.user", "");
+        this.dbPassword = dbProps.getProperty("db.password", "");
     }
 
     public DatabaseUtilities() {
+        // this ("src/main/resources/db.properties);
         this("db.properties");
     }
 
@@ -70,10 +72,10 @@ public class DatabaseUtilities {
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
-    public static DatabaseUtilities instance;
+    private static DatabaseUtilities instance;
 
     public static DatabaseUtilities connect() {
         instance = new DatabaseUtilities();
