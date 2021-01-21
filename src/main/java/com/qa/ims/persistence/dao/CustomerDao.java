@@ -96,6 +96,7 @@ public class CustomerDao implements IDomainDao<Customer> {
         }
         return null;
     }
+    
 
     @Override
     public int delete(long id) {
