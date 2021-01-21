@@ -109,6 +109,7 @@ public class CustomerDao implements IDomainDao<Customer> {
         }
         return 0;
     }
+    
 
     @Override
     public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
