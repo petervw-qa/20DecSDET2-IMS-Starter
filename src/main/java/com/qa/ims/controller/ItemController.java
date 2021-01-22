@@ -42,8 +42,9 @@ public class ItemController implements ICrudController<Item> {
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+        LOGGER.info("Please enter the id of the item you would like to delete");
+        Long id = javaUtilities.getLong();
+        return itemDao.delete(id);
+    }
 
 }
