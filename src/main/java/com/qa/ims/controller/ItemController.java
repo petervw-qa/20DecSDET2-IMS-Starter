@@ -4,10 +4,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.qa.ims.persistence.dao.CustomerDao;
 import com.qa.ims.persistence.dao.ItemDao;
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.JavaUtilities;
 
@@ -29,10 +26,14 @@ public class ItemController implements ICrudController<Item> {
 
 	@Override
 	public Item create() {
-		// TODO Auto-generated method stub
-		return null;
+        LOGGER.info("Please enter the items title");
+        String name = javaUtilities.getString();
+        LOGGER.info("Please enter a value");
+        Double value = javaUtilities.getDouble();
+        Item item = itemDao.create(new Item(name, value));
+        LOGGER.info("Customer created");
+        return item;
 	}
-
 	@Override
 	public Item update() {
 		// TODO Auto-generated method stub
