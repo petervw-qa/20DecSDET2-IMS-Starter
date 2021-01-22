@@ -36,9 +36,16 @@ public class ItemController implements ICrudController<Item> {
 	}
 	@Override
 	public Item update() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        LOGGER.info("Please enter the id of the item you would like to update");
+        Long id = javaUtilities.getLong();
+        LOGGER.info("Please enter a title");
+        String name = javaUtilities.getString();
+        LOGGER.info("Please enter a value");
+        Double value = javaUtilities.getDouble();
+        Item item = itemDao.update(new Item(id, name, value));
+        LOGGER.info("Item Updated");
+        return item;
+    }
 
 	@Override
 	public int delete() {
