@@ -39,9 +39,14 @@ public class OrderController implements ICrudController<Order>  {
 
 	@Override
 	public Order update() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        LOGGER.info("Please enter the id of the order you would like to update");
+        Long id = javaUtilities.getLong();
+        LOGGER.info("Please enter the customer's ID number");
+        Long fk_customer_id = javaUtilities.getLong();
+        Order order = orderDao.update(new Order(id, fk_customer_id));
+        LOGGER.info("Order Updated");
+        return order;
+    }
 
 	@Override
 	public int delete() {
