@@ -47,10 +47,10 @@ public class IMSEntryPoint {
                 active = this.customers;
                 break;
             case ITEM:
-                // fill this in!
+                // fill this in! this.item
                 break;
             case ORDER:
-                // fill this in!
+                // fill this in! this.order
                 break;
             case STOP:
                 return;
