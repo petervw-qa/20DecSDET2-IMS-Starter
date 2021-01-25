@@ -38,6 +38,11 @@ public class OrderController implements ICrudController<Order> {
 			Long item_id = javaUtilities.getLong();
 			Order order = orderDao.addToOrder(new Order(order_id, customer_id), item_id);
 			return order;
+		} else if (action.equals("REMOVE")) {
+			LOGGER.info("Enter the id of the item you would like to remove from the order");
+			Long item_id = javaUtilities.getLong();
+			Order order = orderDao.removeFromOrder(item_id);
+			return order;
 		}
 
 		return null;
