@@ -25,6 +25,12 @@ public class Order {
 		this.orderItems = orderItems;
 	}
 
+	public Order(Long id, Long fk_customer_id) {
+		super();
+		this.id = id;
+		this.fk_customer_id = fk_customer_id;
+	}
+
 	public Long getId() {
 		return id;
 	}
