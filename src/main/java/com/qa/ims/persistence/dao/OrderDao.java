@@ -56,7 +56,7 @@ public class OrderDao implements IDomainDao<Order>  {
 	public Order update(Order order) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
+                        .prepareStatement("UPDATE orders SET fk_customer_id = ? WHERE id = ?");) {
             statement.setLong(1, order.getId());
             statement.setLong(2, order.getFk_customer_id());
             statement.executeUpdate();
