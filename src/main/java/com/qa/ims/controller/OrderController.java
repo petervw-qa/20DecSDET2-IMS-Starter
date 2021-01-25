@@ -65,4 +65,15 @@ public class OrderController implements ICrudController<Order> {
 		Long id = javaUtilities.getLong();
 		return orderDao.delete(id);
 	}
+
+	public Double calculateTotal() {
+		LOGGER.info("Please enter the customer id");
+		Long c_id = javaUtilities.getLong();
+		LOGGER.info("Please enter the order id");
+		Long o_id = javaUtilities.getLong();
+		LOGGER.info("Calculating Total...");
+		Double total = orderDao.calculateOrderTotalCost(new Order(o_id, c_id));
+		LOGGER.info(total);
+		return total;
+	}
 }
