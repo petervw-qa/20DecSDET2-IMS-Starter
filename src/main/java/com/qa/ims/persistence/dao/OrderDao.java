@@ -71,7 +71,7 @@ public class OrderDao implements IDomainDao<Order> {
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		Long fk_customer_id = resultSet.getLong("fk_customer_id");
+		Long fk_customer_id = resultSet.getLong("fk_customers_id");
 		return new Order(id, fk_customer_id);
 	}
 
@@ -105,7 +105,7 @@ public class OrderDao implements IDomainDao<Order> {
 	public Order addToOrder_NewUpdate(Order order, Long itemID) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO order_items(fk_o_id, fk_i_id) VALUES(?, ?)")) {
+						.prepareStatement("INSERT INTO orders_items(fk_orders_id, fk_items_id) VALUES(?, ?)")) {
 			statement.setLong(1, order.getId());
 			statement.setLong(2, itemID);
 			statement.executeUpdate();
@@ -120,7 +120,7 @@ public class OrderDao implements IDomainDao<Order> {
 	public int removeFromOrder_NewUpdate(Order order, Long itemID) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("DELETE FROM order_items WHERE fk_i_id = ?")) {
+						.prepareStatement("DELETE FROM orders_items WHERE fk_items_id = ?")) {
 			statement.setLong(1, order.getId());
 			statement.setLong(2, itemID);
 			return statement.executeUpdate();
@@ -135,7 +135,7 @@ public class OrderDao implements IDomainDao<Order> {
 		Double totalPrice = 0.0;
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(
-						"SELECT items.id, items.price FROM items JOIN order_items ON items.id=order_items.fk_i_id WHERE order_items.fk_o_id = ?")) {
+						"SELECT items.id, items.price FROM items JOIN order_items ON items.id=order_items.fk_items_id WHERE orders_items.fk_orders_id = ?")) {
 			statement.setLong(1, order.getId());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
