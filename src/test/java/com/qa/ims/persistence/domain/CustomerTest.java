@@ -7,7 +7,7 @@ import org.junit.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 public class CustomerTest {
-	
+
 	@Test
 	public void toStringTEST() {
 		Customer customer = new Customer(1L, "Peter", "Vaughan-Williams");
@@ -19,10 +19,19 @@ public class CustomerTest {
 	public void equalsTEST() {
 		EqualsVerifier.simple().forClass(Customer.class).verify();
 	}
-	
+
 	@Test
 	public void firstConstructorTEST() {
 		Customer customer = new Customer("Peter", "Vaughan-Williams");
+		assertEquals("Peter", customer.getFirstName());
+		assertEquals("Vaughan-Williams", customer.getSurname());
+
+	}
+
+	@Test
+	public void secondConstructorTEST() {
+		Customer customer = new Customer(1L, "Peter", "Vaughan-Williams");
+		assertEquals(Long.valueOf("1"), customer.getId());
 		assertEquals("Peter", customer.getFirstName());
 		assertEquals("Vaughan-Williams", customer.getSurname());
 
