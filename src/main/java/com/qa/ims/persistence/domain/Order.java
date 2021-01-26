@@ -31,6 +31,10 @@ public class Order {
 		this.fk_customer_id = fk_customer_id;
 	}
 
+	public Order(Long customer_id) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

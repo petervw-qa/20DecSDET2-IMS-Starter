@@ -53,17 +53,6 @@ public class OrderDao implements IDomainDao<Order> {
 
 	@Override
 	public Order update(Order order) {
-		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-				PreparedStatement statement = connection
-						.prepareStatement("UPDATE orders SET fk_customer_id = ? WHERE id = ?");) {
-			statement.setLong(1, order.getId());
-			statement.setLong(2, order.getFk_customer_id());
-			statement.executeUpdate();
-			return read(order.getId());
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
-		}
 		return null;
 	}
 
@@ -81,8 +70,9 @@ public class OrderDao implements IDomainDao<Order> {
 
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Long id = resultSet.getLong("id");
+		Long fk_customer_id = resultSet.getLong("fk_customer_id");
+		return new Order(id, fk_customer_id);
 	}
 
 	public Order readLatest() {
@@ -112,7 +102,7 @@ public class OrderDao implements IDomainDao<Order> {
 		return null;
 	}
 
-	public Order addToOrder(Order order, Long itemID) {
+	public Order addToOrder_NewUpdate(Order order, Long itemID) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement("INSERT INTO order_items(fk_o_id, fk_i_id) VALUES(?, ?)")) {
@@ -127,18 +117,18 @@ public class OrderDao implements IDomainDao<Order> {
 		return null;
 	}
 
-	public Order removeFromOrder(Long itemID) {
+	public int removeFromOrder_NewUpdate(Order order, Long itemID) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement("DELETE FROM order_items WHERE fk_i_id = ?")) {
-			statement.setLong(1, itemID);
-			statement.executeUpdate();
-			return readLatest();
+			statement.setLong(1, order.getId());
+			statement.setLong(2, itemID);
+			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return 0;
 	}
 
 	public Double calculateOrderTotalCost(Order order) {
