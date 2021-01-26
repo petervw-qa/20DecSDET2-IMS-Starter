@@ -93,6 +93,20 @@ public class ItemDao implements IDomainDao<Item> {
         }
         return 0;
     }
+	
+	public int removeOrdersItems(Item item, long orderID) {
+        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+        PreparedStatement statement = connection
+                .prepareStatement("DELETE FROM orders_items WHERE (fk_orders_id = ? AND fk_items_id = ?)")) {
+            statement.setLong(1, orderID);
+            statement.setLong(2, item.getId());
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+        return 0;
+    }
 
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
