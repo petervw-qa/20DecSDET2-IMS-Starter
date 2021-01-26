@@ -7,23 +7,7 @@ public class Order {
 
 	private Long id;
 	private Long fk_customer_id;
-	private Double orderValue;
 	private List<Item> orderItems = new ArrayList<>();
-
-	public Order(Long id, Long fk_customer_id, Double orderValue) {
-		super();
-		this.id = id;
-		this.fk_customer_id = fk_customer_id;
-		this.orderValue = orderValue;
-	}
-
-	public Order(Long id, Long fk_customer_id, Double orderValue, List<Item> orderItems) {
-		super();
-		this.id = id;
-		this.fk_customer_id = fk_customer_id;
-		this.orderValue = orderValue;
-		this.orderItems = orderItems;
-	}
 
 	public Order(Long id, Long fk_customer_id) {
 		super();
@@ -31,8 +15,9 @@ public class Order {
 		this.fk_customer_id = fk_customer_id;
 	}
 
-	public Order(Long customer_id) {
-		// TODO Auto-generated constructor stub
+	public Order(Long fk_customer_id) {
+		super();
+		this.fk_customer_id = fk_customer_id;
 	}
 
 	public Long getId() {
@@ -51,14 +36,6 @@ public class Order {
 		this.fk_customer_id = fk_customer_id;
 	}
 
-	public Double getOrderValue() {
-		return orderValue;
-	}
-
-	public void setOrderValue(Double orderValue) {
-		this.orderValue = orderValue;
-	}
-
 	public List<Item> getOrderItems() {
 		return orderItems;
 	}
@@ -69,8 +46,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", fk_customer_id=" + fk_customer_id + ", orderValue=" + orderValue + ", orderItems="
-				+ orderItems + "]";
+		return "Order [id=" + id + ", fk_customer_id=" + fk_customer_id + "]";
 	}
 
 	@Override
@@ -79,8 +55,6 @@ public class Order {
 		int result = 1;
 		result = prime * result + ((fk_customer_id == null) ? 0 : fk_customer_id.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((orderItems == null) ? 0 : orderItems.hashCode());
-		result = prime * result + ((orderValue == null) ? 0 : orderValue.hashCode());
 		return result;
 	}
 
@@ -103,19 +77,7 @@ public class Order {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (orderItems == null) {
-			if (other.orderItems != null)
-				return false;
-		} else if (!orderItems.equals(other.orderItems))
-			return false;
-		if (orderValue == null) {
-			if (other.orderValue != null)
-				return false;
-		} else if (!orderValue.equals(other.orderValue))
-			return false;
 		return true;
 	}
-	
-	
 
 }

@@ -22,12 +22,12 @@ CREATE TABLE IF NOT EXISTS `ims` . `orders` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`fk_customers_id` INT NOT NULL,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`fk_customers_id`) REFERENCES customers(`id`)
+	FOREIGN KEY (`fk_c_id`) REFERENCES customers(`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `ims` . `orders_items` (
 	`fk_orders_id` INT NOT NULL,
 	`fk_items_id` INT NOT NULL,
-	FOREIGN KEY (`fk_orders_id`) REFERENCES orders(`id`),
-	FOREIGN KEY (`fk_items_id`) REFERENCES items(`id`)
+	FOREIGN KEY (`fk_o_id`) REFERENCES orders(`id`),
+	FOREIGN KEY (`fk_i_id`) REFERENCES items(`id`)
 );

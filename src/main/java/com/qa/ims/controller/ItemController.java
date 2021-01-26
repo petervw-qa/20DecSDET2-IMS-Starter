@@ -15,6 +15,12 @@ public class ItemController implements ICrudController<Item> {
     private ItemDao itemDao;
     private JavaUtilities javaUtilities;
 
+	public ItemController(ItemDao itemDao, JavaUtilities javaUtilities) {
+		super();
+        this.itemDao = itemDao;
+        this.javaUtilities = javaUtilities;
+    }
+	
 	@Override
 	public List<Item> readAll() {
         List<Item> items = itemDao.readAll();
@@ -26,7 +32,7 @@ public class ItemController implements ICrudController<Item> {
 
 	@Override
 	public Item create() {
-        LOGGER.info("Please enter the items title");
+        LOGGER.info("Please enter the name of the item");
         String name = javaUtilities.getString();
         LOGGER.info("Please enter a value");
         Double value = javaUtilities.getDouble();
@@ -38,12 +44,12 @@ public class ItemController implements ICrudController<Item> {
 	public Item update() {
         LOGGER.info("Please enter the id of the item you would like to update");
         Long id = javaUtilities.getLong();
-        LOGGER.info("Please enter a title");
+        LOGGER.info("Please enter the item's title");
         String name = javaUtilities.getString();
         LOGGER.info("Please enter a value");
         Double value = javaUtilities.getDouble();
         Item item = itemDao.update(new Item(id, name, value));
-        LOGGER.info("Item Updated");
+        LOGGER.info("The item has been updated.");
         return item;
     }
 

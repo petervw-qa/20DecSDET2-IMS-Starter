@@ -16,6 +16,12 @@ public class OrderController implements ICrudController<Order> {
 	private OrderDao orderDao;
 	private JavaUtilities javaUtilities;
 
+	public OrderController(OrderDao orderDao, JavaUtilities javaUtilities) {
+		super();
+        this.orderDao = orderDao;
+        this.javaUtilities = javaUtilities;
+    }
+
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDao.readAll();
