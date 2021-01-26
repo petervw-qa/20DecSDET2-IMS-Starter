@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+
 public class ItemTest {
 
 	@Test
@@ -28,5 +30,12 @@ public class ItemTest {
 		assertEquals(100.0, item.getPrice(), 0.1);
 
 	}
+	
+	@Test
+	public void equalsTEST() {
+		EqualsVerifier.simple().forClass(Item.class).verify();
+	}
+	
+	
 
 }
