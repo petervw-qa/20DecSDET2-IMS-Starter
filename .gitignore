@@ -4,4 +4,4 @@ bin/
 .*
 !.gitignore
 *.log
-
+*.db
