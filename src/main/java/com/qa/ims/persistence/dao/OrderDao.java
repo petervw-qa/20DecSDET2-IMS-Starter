@@ -130,6 +130,19 @@ public class OrderDao implements IDomainDao<Order> {
 		}
 		return 0;
 	}
+	
+	public int removeOrdersItems(Order order, long itemID) {
+        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE (fk_orders_id = ? AND fk_items_id = ?)")) {
+            statement.setLong(1, order.getId());
+            statement.setLong(2, itemID);
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+        return 0;
+    }
 
 	public Double calculateOrderTotalCost(Order order) {
 		Double totalPrice = 0.0;
