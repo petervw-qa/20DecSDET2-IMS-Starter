@@ -9,15 +9,23 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 public class CustomerTest {
 	
 	@Test
-	public void testToString() {
-		Customer customer = new Customer(1L, "peter", "vaughan-williams");
-		String expected = "id:1 first name:peter surname:vaughan-williams";
+	public void toStringTEST() {
+		Customer customer = new Customer(1L, "Peter", "Vaughan-Williams");
+		String expected = "id:1 first name:Peter surname:Vaughan-Williams";
 		assertEquals(expected, customer.toString());
 	}
 
 	@Test
-	public void testEquals() {
+	public void equalsTEST() {
 		EqualsVerifier.simple().forClass(Customer.class).verify();
+	}
+	
+	@Test
+	public void firstConstructorTEST() {
+		Customer customer = new Customer("Peter", "Vaughan-Williams");
+		assertEquals("Peter", customer.getFirstName());
+		assertEquals("Vaughan-Williams", customer.getSurname());
+
 	}
 
 }
