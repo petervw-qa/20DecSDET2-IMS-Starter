@@ -39,9 +39,9 @@ public class ItemDao implements IDomainDao<Item> {
 	public Item create(Item item) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("INSERT INTO items(name, value) VALUES (?, ?)");) {
+                        .prepareStatement("INSERT INTO items(name, price) VALUES (?, ?)");) {
             statement.setString(1, item.getName());
-            statement.setDouble(2, item.getValue());
+            statement.setDouble(2, item.getPrice());
             statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
@@ -69,9 +69,9 @@ public class ItemDao implements IDomainDao<Item> {
 	public Item update(Item item) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("UPDATE customers SET name = ?, value = ? WHERE id = ?");) {
+                        .prepareStatement("UPDATE customers SET name = ?, price = ? WHERE id = ?");) {
             statement.setString(1, item.getName());
-            statement.setDouble(2, item.getValue());
+            statement.setDouble(2, item.getPrice());
             statement.setLong(3, item.getId());
             statement.executeUpdate();
             return read(item.getId());
@@ -98,8 +98,8 @@ public class ItemDao implements IDomainDao<Item> {
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong("id");
         String name = resultSet.getString("name");
-        Double value = resultSet.getDouble("value");
-        return new Item(id, name, value);
+        Double price = resultSet.getDouble("price");
+        return new Item(id, name, price);
     }
 
 	

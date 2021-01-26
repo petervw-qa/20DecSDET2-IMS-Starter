@@ -5,20 +5,20 @@ public class Item {
 	// variables
 	private Long id;
 	private String name;
-	private double value;
+	private double price;
 
 	// constructors
-	public Item(String name, double value) {
+	public Item(String name, double price) {
 		super();
 		this.name = name;
-		this.value = value;
+		this.price = price;
 	}
 
-	public Item(Long id, String name, double value) {
+	public Item(Long id, String name, double price) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.value = value;
+		this.price = price;
 	}
 
 	// getters and setters
@@ -38,17 +38,17 @@ public class Item {
 		this.name = name;
 	}
 
-	public double getValue() {
-		return value;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setValue(double value) {
-		this.value = value;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", value=" + value + "]";
+		return "Item [id=" + id + ", name=" + name + ", price=" + price + "]";
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class Item {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		long temp;
-		temp = Double.doubleToLongBits(value);
+		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -82,7 +82,7 @@ public class Item {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
 		return true;
 	}

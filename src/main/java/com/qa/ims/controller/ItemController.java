@@ -34,9 +34,9 @@ public class ItemController implements ICrudController<Item> {
 	public Item create() {
         LOGGER.info("Please enter the name of the item");
         String name = javaUtilities.getString();
-        LOGGER.info("Please enter a value");
-        Double value = javaUtilities.getDouble();
-        Item item = itemDao.create(new Item(name, value));
+        LOGGER.info("Please enter the value of the item");
+        Double price = javaUtilities.getDouble();
+        Item item = itemDao.create(new Item(name, price));
         LOGGER.info("Customer created");
         return item;
 	}
@@ -47,8 +47,8 @@ public class ItemController implements ICrudController<Item> {
         LOGGER.info("Please enter the item's title");
         String name = javaUtilities.getString();
         LOGGER.info("Please enter a value");
-        Double value = javaUtilities.getDouble();
-        Item item = itemDao.update(new Item(id, name, value));
+        Double price = javaUtilities.getDouble();
+        Item item = itemDao.update(new Item(id, name, price));
         LOGGER.info("The item has been updated.");
         return item;
     }
