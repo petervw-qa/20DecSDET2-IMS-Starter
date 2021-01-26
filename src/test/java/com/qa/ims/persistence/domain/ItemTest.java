@@ -36,6 +36,30 @@ public class ItemTest {
 		EqualsVerifier.simple().forClass(Item.class).verify();
 	}
 	
+	@Test
+	public void setIdTEST() {
+		Item item = new Item(1L, "super rubber", 100);
+		item.setId(2L);
+		assertEquals(Long.valueOf("2"), item.getId());
+		
+	}
+	
+	@Test
+	public void setNameTEST() {
+		Item item = new Item(1L, "super rubber", 100);
+		item.setName("kryptonite");
+		assertEquals("kryptonite", item.getName());
+		
+	}
+	
+	@Test
+	public void setPriceTEST() {
+		Item item = new Item(1L, "super rubber", 100);
+		item.setPrice(5000);
+		assertEquals(5000, item.getPrice(), 0.1);
+		
+	}
+	
 	
 
 }
