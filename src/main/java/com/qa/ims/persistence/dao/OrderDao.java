@@ -11,12 +11,16 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DatabaseUtilities;
 
 public class OrderDao implements IDomainDao<Order> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
+
+	public static final ItemDao itemDao = new ItemDao();
 
 	@Override
 	public List<Order> readAll() {
@@ -34,21 +38,40 @@ public class OrderDao implements IDomainDao<Order> {
 		}
 		return new ArrayList<>();
 	}
+	
+	public double CalculateTotalOrderCost(Long id) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("SELECT * FROM orders_items WHERE fk_orders_id = ?");) {
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			double cost = 0;
+			while (resultSet.next()) {
+				cost += itemDao.read(resultSet.getLong("fk_items_id")).getPrice();
+			}
+			return cost;
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+
 
 	@Override
 	public Order create(Order order) {
-        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO orders(fk_customers_id) VALUES (?)")) {
-            statement.setLong(1, order.getFk_customer_id());
-            statement.executeUpdate();
-            return readLatest();
-        } catch (Exception e) {
-            LOGGER.debug(e);
-            LOGGER.error(e.getMessage());
-        }
-        return null;
-    }
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("INSERT INTO orders(fk_customers_id) VALUES (?)")) {
+			statement.setLong(1, order.getId());
+			statement.executeUpdate();
+			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
 
 	@Override
 	public Order update(Order order) {
@@ -70,8 +93,13 @@ public class OrderDao implements IDomainDao<Order> {
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		Long fk_customer_id = resultSet.getLong("fk_customers_id");
-		return new Order(id, fk_customer_id);
+		Long fk_customers_id = resultSet.getLong("fk_customers_id");
+		OrderDao orderDao = new OrderDao();
+		List<Item> itemList = orderDao.ListOfItems(id);
+		double price = orderDao.CalculateTotalOrderCost(id);
+		CustomerDao customerDao = new CustomerDao();
+		Customer customer = customerDao.read(fk_customers_id);
+		return new Order(id, customer, itemList, price);
 	}
 
 	public Order readLatest() {
@@ -101,7 +129,7 @@ public class OrderDao implements IDomainDao<Order> {
 		return null;
 	}
 
-	public Order addToOrder_NewUpdate(Order order, Long itemID) {
+	public Order addToOrder_NewUpdate(Order order, Long itemID, Long orderID) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement("INSERT INTO orders_items(fk_orders_id, fk_items_id) VALUES(?, ?)")) {
@@ -116,30 +144,40 @@ public class OrderDao implements IDomainDao<Order> {
 		return null;
 	}
 
-	public int removeFromOrder_NewUpdate(Order order, Long itemID) {
-        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO orders_items(fk_orders_id, fk_items_id) VALUES(?, ?)")) {
-            statement.setLong(1, order.getId());
-            statement.setLong(2, itemID);
-            return statement.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.debug(e);
-            LOGGER.error(e.getMessage());
-        }
-        return 0;
-    }
+	public Order removeFromOrder_NewUpdate(Order order, Long itemID, Long orderID) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("DELETE FROM orders_items WHERE (fk_orders_id = ? AND fk_items_id = ?)")) {
+			List<Item> itemlist = order.getOrdersItems();
+			itemlist.remove(itemDao.read(itemID));
+			Order newOrder = order;
+			newOrder.setOrdersItems(itemlist);
+			newOrder.setTotalPrice(newOrder.getTotalPrice() - itemDao.read(itemID).getPrice());
+			return newOrder;
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 	
-	public int removeOrdersItems(Order order, long itemID) {
-        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE (fk_orders_id = ? AND fk_items_id = ?)")) {
-            statement.setLong(1, order.getId());
-            statement.setLong(2, itemID);
-            return statement.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.debug(e);
-            LOGGER.error(e.getMessage());
-        }
-        return 0;
-    }
+	public List<Item> ListOfItems(Long id) {
+		List<Item> ListOfItems = new ArrayList<>();
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("SELECT * FROM orders_items WHERE fk_orders_id = ?");) {
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				ListOfItems.add(itemDao.read(resultSet.getLong("fk_items_id")));
+			}
+			return ListOfItems;
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return ListOfItems;
+	}
 
 }

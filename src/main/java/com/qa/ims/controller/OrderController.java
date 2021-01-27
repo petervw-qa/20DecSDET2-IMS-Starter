@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.dao.CustomerDao;
 import com.qa.ims.persistence.dao.OrderDao;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.JavaUtilities;
 
@@ -33,34 +35,36 @@ public class OrderController implements ICrudController<Order> {
 
 	@Override
 	public Order create() {
-        LOGGER.info("Please enter the customer id");
-        Long customer_id = javaUtilities.getLong();
-        Order order = orderDao.create(new Order(customer_id));
+        LOGGER.info("Please enter the ID of the Customer placing the order.");
+        Long fk_customers_id = javaUtilities.getLong();
+        CustomerDao customerDao = new CustomerDao();  
+        Customer customer = customerDao.read(fk_customers_id);
+        Order order = orderDao.create(new Order(customer));
         LOGGER.info("Order created");
         return order;
-    }
+	}
 
 	@Override
-	 public Order update() {
-        LOGGER.info("Please enter the customer id you would like to update");
-        Long customer_id = javaUtilities.getLong();
-        LOGGER.info("Please enter the order id you would like to update");
+	public Order update() {
+		Order order = new Order();
+		LOGGER.info("Please enter the id of the order you would like to update.");
         Long order_id = javaUtilities.getLong();
-        LOGGER.info("Would you like to ADD or REMOVE an item? Please type in all capitals.");
-        String action = javaUtilities.getString();
-        if (action.equals("ADD")) {
-            LOGGER.info("Enter the id of the item you would like to add to the order");
-            Long item_id = javaUtilities.getLong();
-            Order order = orderDao.addToOrder_NewUpdate(new Order(order_id, customer_id), item_id);
-            return order;
-        } else if (action.equals("REMOVE")) {
-            LOGGER.info("Enter the id of the item you would like to remove from the order");
-            Long item_id = javaUtilities.getLong();
-            orderDao.removeFromOrder_NewUpdate(new Order(order_id, customer_id), item_id);
-            return null;
+        LOGGER.info("Would you like to ADD or REMOVE and item? Please enter in all capitals.");
+        String choice = javaUtilities.getString();
+        LOGGER.info("Please enter the ID of the item you would like to choose.");
+        Long item_id = javaUtilities.getLong();
+        if ( choice.equals("ADD") ) {
+        	order = orderDao.addToOrder_NewUpdate(orderDao.read(order_id), item_id, order_id);
+        	LOGGER.info("The item has been added to the order. Thank you!");
+        } else if ( choice.equals("REMOVE") ) {
+        	order = orderDao.removeFromOrder_NewUpdate(orderDao.read(order_id), item_id, order_id);
+        	LOGGER.info("The item has been removed from order, Thank you!");
         }
-        return null;
-    }
+        
+        LOGGER.info("Order updated");
+		return order;
+        
+	}
 
 	@Override
 	public int delete() {

@@ -1,19 +1,40 @@
 package com.qa.ims.persistence.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Order {
 
 	private Long id;
-	private Long fk_customer_id;
+	private Customer fk_customer_id;
+	private double totalPrice;
+	private List<Item> ordersItems = new ArrayList<>();
 
-	public Order(Long id, Long fk_customer_id) {
+	public Order(Long id, Customer fk_customer_id) {
 		super();
 		this.id = id;
 		this.fk_customer_id = fk_customer_id;
 	}
 
-	public Order(Long fk_customer_id) {
+	public Order(Customer fk_customer_id) {
 		super();
 		this.fk_customer_id = fk_customer_id;
+	}
+
+	public Order() {
+
+	}
+
+	public Order(Long id, Customer fk_customer_id, double totalPrice, List<Item> ordersItems) {
+		super();
+		this.id = id;
+		this.fk_customer_id = fk_customer_id;
+		this.totalPrice = totalPrice;
+		this.ordersItems = ordersItems;
+	}
+
+	public Order(Long id, Customer customer, List<Item> itemList, double totalPrice) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -24,17 +45,28 @@ public class Order {
 		this.id = id;
 	}
 
-	public Long getFk_customer_id() {
+	public Customer getFk_customer_id() {
 		return fk_customer_id;
 	}
 
-	public void setFk_customer_id(Long fk_customer_id) {
+	public void setFk_customer_id(Customer fk_customer_id) {
 		this.fk_customer_id = fk_customer_id;
 	}
 
-	@Override
-	public String toString() {
-		return "id= " + id + " fk_customer_id= " + fk_customer_id;
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	public List<Item> getOrdersItems() {
+		return ordersItems;
+	}
+	
+	public void setOrdersItems(List<Item> items) {
+		this.ordersItems = items;
 	}
 
 	@Override
@@ -43,6 +75,10 @@ public class Order {
 		int result = 1;
 		result = prime * result + ((fk_customer_id == null) ? 0 : fk_customer_id.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((ordersItems == null) ? 0 : ordersItems.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(totalPrice);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -65,7 +101,19 @@ public class Order {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (ordersItems == null) {
+			if (other.ordersItems != null)
+				return false;
+		} else if (!ordersItems.equals(other.ordersItems))
+			return false;
+		if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", fk_customer_id=" + fk_customer_id + ", totalPrice=" + totalPrice + "]";
 	}
 
 }
