@@ -24,7 +24,7 @@ public class ItemDAOTest {
 	@Test
 	public void readAllTEST() {
 		List<Item> ItemList = new ArrayList<>();
-		ItemList.add(new Item(1L, "pencil", 0.49D));
+		ItemList.add(new Item(1L, "rubber", 1.50D));
 		assertEquals(ItemList, DAO.readAll());
 
 	}
@@ -39,7 +39,7 @@ public class ItemDAOTest {
 	@Test
 	public void readTEST() {
 		final long ID = 1L;
-		assertEquals(new Item(ID, "pencil", 0.49D), DAO.read(ID));
+		assertEquals(new Item(ID, "rubber", 1.50D), DAO.read(ID));
 		assertEquals(null, DAO.read(null));
 	}
 
@@ -48,16 +48,20 @@ public class ItemDAOTest {
 		assertEquals(0, DAO.delete(1L));
 
 	}
+	
+	@Test
+	public void removeOrdersItemsTEST() {
+		assertEquals(1, DAO.removeOrdersItems(new Item(1L, "rubber", 1.50), 1L));
+	}
 
 	@Test
 	public void readLatestTEST() {
-		assertEquals(new Item(1L, "pencil", 0.49D), DAO.readLatest());
+		assertEquals(new Item(1L, "rubber", 1.50D), DAO.readLatest());
 	}
 
 	@Test
 	public void updateTEST() {
-		final Item NewItem = new Item(1L, "stapler", 60000D);
-		assertEquals(NewItem, DAO.update(NewItem));
-		assertEquals(null, DAO.update(null));
-	}
+        final Item updated = new Item(1L, "rubber", 1.50D);
+        assertEquals(updated, DAO.update(updated));
+    }
 }
