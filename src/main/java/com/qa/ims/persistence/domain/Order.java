@@ -1,13 +1,9 @@
 package com.qa.ims.persistence.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Order {
 
 	private Long id;
 	private Long fk_customer_id;
-	private List<Item> orderItems = new ArrayList<>();
 
 	public Order(Long id, Long fk_customer_id) {
 		super();
@@ -36,17 +32,9 @@ public class Order {
 		this.fk_customer_id = fk_customer_id;
 	}
 
-	public List<Item> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<Item> orderItems) {
-		this.orderItems = orderItems;
-	}
-
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", fk_customer_id=" + fk_customer_id + "]";
+		return "id=" + id + " fk_customer_id=" + fk_customer_id;
 	}
 
 	@Override
