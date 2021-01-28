@@ -1,111 +1,107 @@
 package com.qa.ims.persistence.dao;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DatabaseUtilities;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-
 public class OrderDAOTest {
-
-    private final OrderDao DAO = new OrderDao();
+	
+	private final OrderDao DAO = new OrderDao();
 
     @Before
     public void setup() {
         DatabaseUtilities.connect();
         DatabaseUtilities.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
     }
-
-    @Test
-    public void createTEST() {
-    	final Customer TestCustomer = new Customer(1L, "jordan", "harrison");
-		final List<Item> ListOfItems = new ArrayList<>();
-        final Order created = new Order(2L, TestCustomer, ListOfItems, 0.0);
+    
+    @After
+    public void testDelete() {
+    	assertEquals(1, DAO.deleteOrdersItems(1L));
+        assertEquals(1, DAO.delete(1L));
         
-        assertEquals(created, DAO.create(created));
-        assertEquals(null, DAO.create(null));
     }
 
     @Test
-    public void readAllTEST() {
+    public void testReadAll() {
     	final Customer customer = new Customer(1L, "jordan", "harrison");
-		final List<Item> ListOfItems = new ArrayList<>();
-		final Item item = new Item(1L, "Super Glue", 2.99D);
-		ListOfItems.add(item);
-		final double cost = item.getPrice();
+		final List<Item> listOfItems = new ArrayList<>();
+		final Item item = new Item(1L,"pencil", 2.99D);
+		listOfItems.add(item);
+		final double price = item.getPrice();
         List<Order> expected = new ArrayList<>();
-        expected.add(new Order(1L, customer, ListOfItems, cost));
-        
+        expected.add(new Order(1L, customer, listOfItems, price));
         assertEquals(expected, DAO.readAll());
     }
 
     @Test
-    public void readLatestTEST() {
+    public void testReadLatest() {
     	final Customer customer = new Customer(1L, "jordan", "harrison");
-		final List<Item> ListOfItems = new ArrayList<>();
-		final Item item = new Item(1L, "Super Glue", 2.99D);
-		ListOfItems.add(item);
+		final List<Item> listOfItems = new ArrayList<>();
+		final Item item = new Item(1L,"pencil", 2.99D);
+		listOfItems.add(item);
 		final double price = item.getPrice();
-		
-        assertEquals(new Order(1L, customer, ListOfItems, price), DAO.readLatest());
+        assertEquals(new Order(1L, customer, listOfItems, price), DAO.readLatest());
+      
     }
 
     @Test
-    public void readTEST() {
-        final Customer customer = new Customer(1L, "jordan", "harrison");
-		final List<Item> ListOfItems = new ArrayList<>();
-		final Item item = new Item(1L, "Super Glue", 2.99D);
-		ListOfItems.add(item);
+    public void testRead() {
+    	final Customer customer = new Customer(1L, "jordan", "harrison");
+		final List<Item> listOfItems = new ArrayList<>();
+		final Item item = new Item(1L,"pencil", 2.99D);
+		listOfItems.add(item);
         final long ID = 1L;
-        
-        assertEquals(new Order(ID, customer, ListOfItems, 2.99D), DAO.read(ID));
+        assertEquals(new Order(ID, customer, listOfItems, 2.99D), DAO.read(ID));
         assertEquals(null, DAO.read(null));
     }
+    
+    @Test
+    public void testCreate() {
+		final Customer customer = new Customer(1L, "jordan", "harrison");
+		final List<Item> listOfItems = new ArrayList<>();
+        final Order newOrder = new Order(2L, customer, listOfItems, 0.1);
+        assertEquals(newOrder, DAO.create(newOrder));
+        assertEquals(null, DAO.create(null));
+    }
 
     @Test
-    public void deleteTEST() {
-    	
-        assertEquals(0L, DAO.delete(1L));
+    public void testUpdate() {
+        assertEquals(null, DAO.update(null));
     }
     
     @Test
-    public void updateTEST() {
-    	
-    	assertEquals(null, DAO.update(null));
-    }
-    
-    @Test
-    public void addToOrder_NewUpdateTEST() {
-    	final Customer customer = new Customer(2L, "Peter", "Vaughan-Williams");
-		final List<Item> ListOfItems = new ArrayList<>();
-		final Item item = new Item(1L, "Super Glue", 2.99D);
-		ListOfItems.add(item);
+    public void testUpdateAdd() {
+    	final Customer customer = new Customer(2L, "peter", "vaughan-williams");
+		final List<Item> itemList = new ArrayList<>();
+		final Item item = new Item(1L,"pencil", 2.99D);
+		itemList.add(item);
         final long ID = 1L;
-        final Order order = new Order(ID, customer, ListOfItems, 2.99D);
-        
+        final Order order = new Order(ID, customer, itemList, 2.99D);
         assertEquals(order, DAO.addToOrder_NewUpdate(order, order.getId(), item.getId()));
         assertEquals(null, DAO.read(null));
     }
-
+    
     @Test
-    public void removeFromOrder_NewUpdateTEST() {
-    	final Customer customer = new Customer(1L, "jordan", "harrison");
-    	final List<Item> ListOfItems = new ArrayList<>();
-		final Item item = new Item(1L, "Super Glue", 2.99D);
-		ListOfItems.add(item);
+    public void testUpdateRemove() {
+    	final Customer customer = new Customer(2L, "peter", "vaughan-williams");
+		final List<Item> itemList = new ArrayList<>();
+		final Item item = new Item(1L,"pencil", 2.99D);
+		itemList.add(item);
         final long ID = 1L;
-        final Order order = new Order(ID, customer, ListOfItems, 2.99D);
-        final List<Item> NewList = new ArrayList<>();
-        
-        assertEquals(new Order(ID, customer, NewList, 0.0), DAO.removeFromOrder_NewUpdate(order, order.getId(), item.getId()));
+        final Order order = new Order(ID, customer, itemList, 2.99D);
+        final List<Item> emptyList = new ArrayList<>();
+        assertEquals(new Order(ID, customer, emptyList, 0.0), DAO.removeFromOrder_NewUpdate(order, order.getId(), item.getId()));
         assertEquals(null, DAO.read(null));
     }
-
+   
 }
