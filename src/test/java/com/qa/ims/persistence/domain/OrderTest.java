@@ -87,7 +87,7 @@ public class OrderTest {
 		double totalPrice = Axe.getPrice() + Wood.getPrice();
 		Order order = new Order(3L, customer, ListOfItems, totalPrice);
 		
-		assertEquals("id=3, fk_customer_id=id:3 first name:Abraham surname:Lincoln, totalPrice=11.44, ordersItems=[id=4 name=Axe price=9.99, id=3 name=Wood price=1.45]", order.toString());
+		assertEquals("Order [id=3, customer=id:3 first name:Abraham surname:Lincoln, ordersItems=[id=4 name=Axe price=9.99, id=3 name=Wood price=1.45], totalPrice=11.44]", order.toString());
 	}
 
 }
