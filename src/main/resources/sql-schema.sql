@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `ims` . `items` (
 CREATE TABLE IF NOT EXISTS `ims` . `orders` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`fk_customers_id` INT NOT NULL,
+	`price` DECIMAL(5,2) NOT NULL,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`fk_customers_id`) REFERENCES customers(`id`)
 );

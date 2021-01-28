@@ -52,9 +52,9 @@ public class OrderDAOTest {
 		final List<Item> ListOfItems = new ArrayList<>();
 		final Item item = new Item(1L, "Super Glue", 2.99D);
 		ListOfItems.add(item);
-		final double cost = item.getPrice();
+		final double price = item.getPrice();
 		
-        assertEquals(new Order(1L, customer, ListOfItems, cost), DAO.readLatest());
+        assertEquals(new Order(1L, customer, ListOfItems, price), DAO.readLatest());
     }
 
     @Test
@@ -89,6 +89,7 @@ public class OrderDAOTest {
 		ListOfItems.add(item);
         final long ID = 1L;
         final Order order = new Order(ID, customer, ListOfItems, 2.99D);
+        
         assertEquals(order, DAO.addToOrder_NewUpdate(order, order.getId(), item.getId()));
         assertEquals(null, DAO.read(null));
     }
