@@ -30,30 +30,30 @@ public class OrderDAOTest {
     }
     
     @Test
-    public void testDelete() {
+    public void deleteTEST() {
     	assertEquals(0, DAO.deleteOrdersItems(1L));
         assertEquals(0, DAO.delete(1L));     
     }
 
     @Test
-    public void testRead() {
+    public void readTEST() {
         assertEquals(testOrder, DAO.read(1L));
     }
     
     @Test
-    public void testReadLatest() {
+    public void readLatestTEST() {
         assertEquals(testOrder, DAO.readLatest());
     }
     
     @Test
-    public void testReadAll() {
+    public void readAllTEST() {
         List<Order> expected = new ArrayList<>();
         expected.add(testOrder);
         assertEquals(expected, DAO.readAll());
     }
     
     @Test
-    public void testCreate() {
+    public void createTEST() {
 		final Customer customer = new Customer(1L, "jordan", "harrison");
 		final List<Item> listOfItems = new ArrayList<>();
         final Order newOrder = new Order(2L, customer, listOfItems, 0.0);
@@ -61,18 +61,18 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void testUpdate() {
+    public void updateTEST() {
         assertEquals(null, DAO.update(null));
     }
     
     @Test
-    public void testUpdateAdd() {
+    public void addToOrder_NewUpdateTEST() {
     	testOrder.getOrdersItems().add(testItem);
         assertEquals(testOrder, DAO.addToOrder_NewUpdate(testOrder.getId(), testItem.getId()));
     }
     
     @Test
-    public void testUpdateRemove() {
+    public void removeFromOrder_NewUpdateTEST() {
     	testOrder.getOrdersItems().remove(testItem);
     	assertEquals(testOrder, DAO.removeFromOrder_NewUpdate(testOrder.getId(), testItem.getId()));
     }
