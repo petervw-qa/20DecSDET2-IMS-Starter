@@ -27,12 +27,6 @@ public class Order {
 		this.setTotalPrice(totalPrice);
 	}
 
-	public Order(Long id, List<Item> ordersItems) {
-		super();
-		this.id = id;
-		this.ordersItems = ordersItems;
-	}
-
 	public Order(Customer fk_customer_id) {
 		this.setFk_customer_id(fk_customer_id);
 	}
@@ -40,6 +34,12 @@ public class Order {
 	public Order(Long id, Customer fk_customer_id) {
 		this.setId(id);
 		this.setFk_customer_id(fk_customer_id);
+	}
+	
+	public Order(Long id, List<Item> ordersItems) {
+		super();
+		this.id = id;
+		this.ordersItems = ordersItems;
 	}
 
 	public Long getId() {
