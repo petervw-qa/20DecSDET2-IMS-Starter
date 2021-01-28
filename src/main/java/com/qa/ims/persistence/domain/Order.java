@@ -4,35 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-	
+
 	private Long id;
 	private Customer fk_customer_id;
 	private double totalPrice;
 	private List<Item> ordersItems = new ArrayList<>();
-	
+
 	public Order() {
 	}
-	
+
 	public Order(Long id, Customer fk_customer_id, List<Item> ordersItems, double totalPrice) {
 		this.setId(id);
 		this.setFk_customer_id(fk_customer_id);
 		this.setOrdersItems(ordersItems);
 		this.setTotalPrice(totalPrice);
 	}
-	
-	public Order(Long id, Customer fk_customer_id,double totalPrice, List<Item> ordersItems) {
+
+	public Order(Long id, Customer fk_customer_id, double totalPrice, List<Item> ordersItems) {
 		this.setId(id);
 		this.setFk_customer_id(fk_customer_id);
 		this.setOrdersItems(ordersItems);
 		this.setTotalPrice(totalPrice);
 	}
-	
-	
-	
+
+	public Order(Long id, List<Item> ordersItems) {
+		super();
+		this.id = id;
+		this.ordersItems = ordersItems;
+	}
+
 	public Order(Customer fk_customer_id) {
 		this.setFk_customer_id(fk_customer_id);
 	}
-	
+
 	public Order(Long id, Customer fk_customer_id) {
 		this.setId(id);
 		this.setFk_customer_id(fk_customer_id);
@@ -53,15 +57,15 @@ public class Order {
 	public void setFk_customer_id(Customer Fk_customer_id) {
 		this.fk_customer_id = Fk_customer_id;
 	}
-	
+
 	public List<Item> getOrdersItems() {
 		return ordersItems;
 	}
-	
+
 	public void setOrdersItems(List<Item> ordersItems) {
 		this.ordersItems = ordersItems;
 	}
-	
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -69,8 +73,6 @@ public class Order {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
-	
 
 	@Override
 	public String toString() {
@@ -120,5 +122,4 @@ public class Order {
 		return true;
 	}
 
-	
 }

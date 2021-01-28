@@ -54,10 +54,10 @@ public class OrderController implements ICrudController<Order> {
         LOGGER.info("Please enter the ID of the item you would like to choose.");
         Long item_id = javaUtilities.getLong();
         if ( choice.equals("ADD") ) {
-        	order = orderDao.addToOrder_NewUpdate(orderDao.read(order_id), item_id, order_id);
+        	order = orderDao.addToOrder_NewUpdate(order_id, item_id);
         	LOGGER.info("The item has been added to the order. Thank you!");
         } else if ( choice.equals("REMOVE") ) {
-        	order = orderDao.removeFromOrder_NewUpdate(orderDao.read(order_id), item_id, order_id);
+        	order = orderDao.removeFromOrder_NewUpdate(order_id, item_id);
         	LOGGER.info("The item has been removed from order, Thank you!");
         }
         
