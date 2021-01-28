@@ -13,7 +13,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS orders (
 `id` INT(11) NOT NULL AUTO_INCREMENT,
 `fk_customers_id` INT NOT NULL,
-`price` DECIMAL(5,2) NOT NULL,
+`price` DOUBLE NOT NULL,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`fk_customers_id`) REFERENCES customers(`id`)
 );
@@ -21,7 +21,7 @@ FOREIGN KEY (`fk_customers_id`) REFERENCES customers(`id`)
 CREATE TABLE IF NOT EXISTS items (
 `id` INT(11) NOT NULL AUTO_INCREMENT,
 `name` VARCHAR(100) NOT NULL,
-`price` DECIMAL(5,2) NOT NULL,
+`price` DOUBLE NOT NULL,
 PRIMARY KEY (`id`)
 );
 

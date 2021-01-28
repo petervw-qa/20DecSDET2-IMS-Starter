@@ -118,17 +118,5 @@ public class CustomerDao implements IDomainDao<Customer> {
         String surname = resultSet.getString("surname");
         return new Customer(id, firstName, surname);
     }
-    
-    public int removeCustomerOrder(long fk_customers_id) {
-        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE fk_customers_id = ?")) {
-            statement.setLong(1, fk_customers_id);
-            return statement.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.debug(e);
-            LOGGER.error(e.getMessage());
-        }
-        return 0;
-    }
 
 }
