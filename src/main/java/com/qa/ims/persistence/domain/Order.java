@@ -33,8 +33,12 @@ public class Order {
 		this.ordersItems = ordersItems;
 	}
 
-	public Order(Long id, Customer customer, List<Item> itemList, double totalPrice) {
-		// TODO Auto-generated constructor stub
+	public Order(Long id, Customer fk_customer_id, List<Item> ListOfItems, double totalPrice) {
+		super();
+		this.id = id;
+		this.fk_customer_id = fk_customer_id;
+		this.totalPrice = totalPrice;
+		this.ordersItems = ListOfItems;
 	}
 
 	public Long getId() {
@@ -65,8 +69,8 @@ public class Order {
 		return ordersItems;
 	}
 	
-	public void setOrdersItems(List<Item> items) {
-		this.ordersItems = items;
+	public void setOrdersItems(List<Item> ordersItems) {
+		this.ordersItems = ordersItems;
 	}
 
 	@Override
@@ -113,7 +117,9 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", fk_customer_id=" + fk_customer_id + ", totalPrice=" + totalPrice + "]";
+		return "id=" + id + ", fk_customer_id=" + fk_customer_id + ", totalPrice=" + totalPrice
+				+ ", ordersItems=" + ordersItems;
 	}
 
+	
 }
