@@ -45,13 +45,13 @@ public class ItemDAOTest {
 
 	@Test
 	public void deleteTEST() {
-		assertEquals(0, DAO.delete(1L));
+		assertEquals(1, DAO.delete(1L));
 
 	}
 	
 	@Test
 	public void removeOrdersItemsTEST() {
-		assertEquals(1, DAO.removeOrdersItems(new Item(1L, "rubber", 1.50), 1L));
+		assertEquals(0, DAO.removeOrdersItems(new Item(1L, "rubber", 1.50), 1L));
 	}
 
 	@Test
