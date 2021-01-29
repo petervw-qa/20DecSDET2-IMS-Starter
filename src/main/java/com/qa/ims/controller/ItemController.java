@@ -37,7 +37,7 @@ public class ItemController implements ICrudController<Item> {
         LOGGER.info("Please enter the value of the item");
         Double price = javaUtilities.getDouble();
         Item item = itemDao.create(new Item(name, price));
-        LOGGER.info("Customer created");
+        LOGGER.info("Item created");
         return item;
 	}
 	@Override
