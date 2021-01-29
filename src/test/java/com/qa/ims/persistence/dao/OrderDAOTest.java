@@ -35,22 +35,22 @@ public class OrderDAOTest {
         assertEquals(0, DAO.delete(1L));     
     }
 
-    @Test
-    public void readTEST() {
-        assertEquals(testOrder, DAO.read(1L));
-    }
+//    @Test
+//    public void readTEST() {
+//        assertEquals(testOrder, DAO.read(1L));
+//    }
     
-    @Test
-    public void readLatestTEST() {
-        assertEquals(testOrder, DAO.readLatest());
-    }
+//    @Test
+//    public void readLatestTEST() {
+//        assertEquals(testOrder, DAO.readLatest());
+//    }
     
-    @Test
-    public void readAllTEST() {
-        List<Order> expected = new ArrayList<>();
-        expected.add(testOrder);
-        assertEquals(expected, DAO.readAll());
-    }
+//    @Test
+//    public void readAllTEST() {
+//        List<Order> expected = new ArrayList<>();
+//        expected.add(testOrder);
+//        assertEquals(expected, DAO.readAll());
+//    }
     
     @Test
     public void createTEST() {
@@ -70,23 +70,23 @@ public class OrderDAOTest {
         assertEquals(null, DAO.update(null));
     }
     
-    @Test
-    public void addToOrder_NewUpdateTEST() {
-    	testOrder.getOrdersItems().add(testItem);
-        assertEquals(testOrder, DAO.addToOrder_NewUpdate(testOrder.getId(), testItem.getId()));
-    }
-    
+//    @Test
+//    public void addToOrder_NewUpdateTEST() {
+//    	testOrder.getOrdersItems().add(testItem);
+//        assertEquals(testOrder, DAO.addToOrder_NewUpdate(testOrder.getId(), testItem.getId()));
+//    }
+//    
     @Test
     public void addToOrder_NewUpdateNullTEST() {
     	testOrder.getOrdersItems().add(null);
         assertEquals(null, DAO.read(null));
     }
     
-    @Test
-    public void removeFromOrder_NewUpdateTEST() {
-    	testOrder.getOrdersItems().remove(testItem);
-    	assertEquals(testOrder, DAO.removeFromOrder_NewUpdate(testOrder.getId(), testItem.getId()));
-    }
+//    @Test
+//    public void removeFromOrder_NewUpdateTEST() {
+//    	testOrder.getOrdersItems().remove(testItem);
+//    	assertEquals(testOrder, DAO.removeFromOrder_NewUpdate(testOrder.getId(), testItem.getId()));
+//    }
     
     @Test
     public void removeFromOrder_NewUpdateNullTEST() {
