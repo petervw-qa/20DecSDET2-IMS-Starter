@@ -13,47 +13,51 @@ import com.qa.ims.utils.DatabaseUtilities;
 
 public class CustomerDAOTest {
 
-    private final CustomerDao DAO = new CustomerDao();
+	private final CustomerDao DAO = new CustomerDao();
 
-    @Before
-    public void setup() {
-        DatabaseUtilities.connect();
-        DatabaseUtilities.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
-    }
+	@Before
+	public void setup() {
+		DatabaseUtilities.connect();
+		DatabaseUtilities.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+	}
 
-    @Test
-    public void testCreate() {
-        final Customer created = new Customer(2L, "nick", "johnson");
-        assertEquals(created, DAO.create(created));
-    }
+	@Test
+	public void readTEST() {
+		final long ID = 1L;
+		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.read(ID));
+		assertEquals(null, DAO.read(null));
+	}
 
-    @Test
-    public void testReadAll() {
-        List<Customer> expected = new ArrayList<>();
-        expected.add(new Customer(1L, "jordan", "harrison"));
-        assertEquals(expected, DAO.readAll());
-    }
+	@Test
+	public void updateTEST() {
+		final Customer updated = new Customer(1L, "nick", "johnson");
+		assertEquals(updated, DAO.update(updated));
+		assertEquals(null, DAO.update(null));
 
-    @Test
-    public void testReadLatest() {
-    	assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
-    }
+	}
 
-    @Test
-    public void testRead() {
-        final long ID = 1L;
-        assertEquals(new Customer(ID, "jordan", "harrison"), DAO.read(ID));
-    }
+	@Test
+	public void deleteTEST() {
+		assertEquals(1, DAO.delete(1));
+	}
 
-    @Test
-    public void testUpdate() {
-        final Customer updated = new Customer(1L, "nick", "johnson");
-        assertEquals(updated, DAO.update(updated));
+	@Test
+	public void readLatestTEST() {
+		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
+	}
 
-    }
+	@Test
+	public void createTEST() {
+		final Customer created = new Customer(2L, "nick", "johnson");
+		assertEquals(created, DAO.create(created));
+		assertEquals(null, DAO.create(null));
+	}
 
-    @Test
-    public void testDelete() {
-        assertEquals(1, DAO.delete(1));
-    }
+	@Test
+	public void readAllTEST() {
+		List<Customer> expected = new ArrayList<>();
+		expected.add(new Customer(1L, "jordan", "harrison"));
+		assertEquals(expected, DAO.readAll());
+	}
+
 }

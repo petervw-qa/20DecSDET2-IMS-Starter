@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS orders_items;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS items;
-DROP TABLE IF EXISTS customers;
+DROP TABLE  orders_items;
+DROP TABLE  orders;
+DROP TABLE  items;
+DROP TABLE  customers;
 
 CREATE TABLE IF NOT EXISTS customers (
 `id` INT(10) NOT NULL AUTO_INCREMENT,

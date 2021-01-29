@@ -59,6 +59,11 @@ public class OrderDAOTest {
         final Order newOrder = new Order(2L, customer, listOfItems, 0.0);
         assertEquals(newOrder, DAO.create(newOrder));
     }
+    
+    @Test
+    public void createNullTEST() {
+    	assertEquals(null, DAO.create(null));
+    }
 
     @Test
     public void updateTEST() {
@@ -72,9 +77,23 @@ public class OrderDAOTest {
     }
     
     @Test
+    public void addToOrder_NewUpdateNullTEST() {
+    	testOrder.getOrdersItems().add(null);
+        assertEquals(null, DAO.read(null));
+    }
+    
+    @Test
     public void removeFromOrder_NewUpdateTEST() {
     	testOrder.getOrdersItems().remove(testItem);
     	assertEquals(testOrder, DAO.removeFromOrder_NewUpdate(testOrder.getId(), testItem.getId()));
     }
+    
+    @Test
+    public void removeFromOrder_NewUpdateNullTEST() {
+    	testOrder.getOrdersItems().add(null);
+        assertEquals(null, DAO.read(null));
+        
+    }
+    
    
 }
