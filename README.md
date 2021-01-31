@@ -1,5 +1,5 @@
 Coverage: 70.1%
-# Fundamental Project: Inventory Management Position
+# Fundamental Project: Inventory Management System
 
 This is an inventory management system for an end user to use via a command line interface (CLI); it allows for multiple functions including creation of customers, storing items to orders, adding and removing specific items based on the item's identification number and many other functions.
 
