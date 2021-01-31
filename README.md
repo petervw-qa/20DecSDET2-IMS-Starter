@@ -10,10 +10,14 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 In order to use this application, you will need:
+```
+
 - Java Version 11 or higher.
 - MySQL Version 8 or higher.
 - Git
 - Maven
+
+```
 
 
 ### Installing
@@ -36,6 +40,8 @@ These are the tests that I created in order to test and figure out how the class
 
 Examples of testing the item class:
 
+```
+
 @Test
 	public void firstConstructorTEST() {
 		Item item = new Item("pencil", 100);
@@ -57,7 +63,11 @@ public void setNameTEST() {
 	assertEquals("kryptonite", item.getName());	
 }
 
+```
+
 Examples of testing the Item Data Access Object class:
+
+```
 
 @Test
 	public void removeOrdersItemsTEST() {
@@ -74,6 +84,8 @@ Examples of testing the Item Data Access Object class:
     final Item updated = new Item(1L, "rubber", 1.50D);
     assertEquals(updated, DAO.update(updated));
 }
+
+```
   
 
 
@@ -82,6 +94,8 @@ Examples of testing the Item Data Access Object class:
 If you want to deploy this project with an actual database, you will need to have your MySQL database working and currently running. 
 
 If you have changed your username and password from admin and root respectively, you will either need to use your bespoke details or reinstall to reset the username and password. When you have then logged in, run mySQL on your cmd and set up your databases and tables using the following commands tailored to this project:
+
+```
 
 drop schema ims;
 
@@ -118,6 +132,7 @@ CREATE TABLE IF NOT EXISTS `ims` . `orders_items` (
 	FOREIGN KEY (`fk_items_id`) REFERENCES items(`id`)
 );
 
+```
 
 ## Built With
 
@@ -134,8 +149,6 @@ We use [SemVer](http://semver.org/) for versioning.
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
-
-*For help in [Choosing a license](https://choosealicense.com/)*
 
 ## Acknowledgments
 
