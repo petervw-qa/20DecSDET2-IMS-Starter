@@ -43,17 +43,17 @@ Examples of testing the item class:
 ```
 
 @Test
-	public void firstConstructorTEST() {
-		Item item = new Item("pencil", 100);
-		assertEquals("pencil", item.getName());
-		assertEquals(100.0, item.getPrice(), 0.1);
+public void firstConstructorTEST() {
+	Item item = new Item("pencil", 100);
+	assertEquals("pencil", item.getName());
+	assertEquals(100.0, item.getPrice(), 0.1);
 }
   
 @Test
-	public void setIdTEST() {
-		Item item = new Item(1L, "super rubber", 100);
-		item.setId(2L);
-		assertEquals(Long.valueOf("2"), item.getId());
+public void setIdTEST() {
+	Item item = new Item(1L, "super rubber", 100);
+	item.setId(2L);
+	assertEquals(Long.valueOf("2"), item.getId());
 }
 	
 @Test
@@ -70,17 +70,18 @@ Examples of testing the Item Data Access Object class:
 ```
 
 @Test
-	public void removeOrdersItemsTEST() {
+public void removeOrdersItemsTEST() {
 	assertEquals(0, DAO.removeOrdersItems(new Item(1L, "rubber", 1.50), 1L));
 }
 
 @Test
-  public void readLatestTEST() {
+ public void readLatestTEST() {
 	assertEquals(new Item(1L, "rubber", 1.50D), DAO.readLatest());
+	
 }
 
 @Test
-	public void updateTEST() {
+public void updateTEST() {
     final Item updated = new Item(1L, "rubber", 1.50D);
     assertEquals(updated, DAO.update(updated));
 }
@@ -104,10 +105,10 @@ CREATE SCHEMA IF NOT EXISTS `ims`;
 USE `ims` ;
 
 CREATE TABLE IF NOT EXISTS `ims`.`customers` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `first_name` VARCHAR(40) DEFAULT NULL,
-    `surname` VARCHAR(40) DEFAULT NULL,
-    PRIMARY KEY (`id`)
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`first_name` VARCHAR(40) DEFAULT NULL,
+	`surname` VARCHAR(40) DEFAULT NULL,
+ 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `ims` . `items` (
@@ -126,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `ims` . `orders` (
 );
 
 CREATE TABLE IF NOT EXISTS `ims` . `orders_items` (
-  `fk_orders_id` INT NOT NULL,
+	`fk_orders_id` INT NOT NULL,
 	`fk_items_id` INT NOT NULL,
 	FOREIGN KEY (`fk_orders_id`) REFERENCES orders(`id`),
 	FOREIGN KEY (`fk_items_id`) REFERENCES items(`id`)
